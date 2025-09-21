@@ -1,0 +1,16 @@
+cloud:
+  name: openstack
+  secretName: openstack-clouds
+flavor: CO1.2
+image: ubuntu22.04
+network_name: sample-network-admin
+subnet_name: sample-subnet-admin
+cloudinit:
+  boundary: "===============BOUNDARY=="
+  parts:
+    - name: cloud-config.yaml
+      type: text/cloud-config
+      file: cloud-init.yaml
+
+ssh_authorized_keys: []
+#    - "ssh-rsa AAAAB3Nz...user1"

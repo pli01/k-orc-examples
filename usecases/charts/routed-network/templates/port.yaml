@@ -11,7 +11,7 @@ spec:
     secretName: {{ .Values.cloud.secretName }}
   managementPolicy: managed
   resource:
-    networkRef: {{ include "routed-network.fullname" . }}-network-admin
+    networkRef: {{ .Values.network_name }}
     description: |
       {{ include "routed-network.fullname" . }}-port-admin
     tags:
@@ -19,5 +19,5 @@ spec:
       - {{ include "routed-network.fullname" . }}
     addresses:
       - ip: {{ .Values.port.router.admin.ip }}
-        subnetRef: {{ include "routed-network.fullname" . }}-subnet-admin
+        subnetRef: {{ .Values.subnet_name }}
 */}}

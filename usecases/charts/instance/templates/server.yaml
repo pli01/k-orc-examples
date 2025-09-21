@@ -1,0 +1,19 @@
+---
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Server
+metadata:
+  name: {{ include "instance.fullname" . }}-instance
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    imageRef: {{ include "instance.fullname" . }}-image
+    flavorRef: {{ include "instance.fullname" . }}-flavor
+    ports:
+    - portRef: {{ include "instance.fullname" . }}-port-instance
+    userData:
+      secretRef: {{ include "instance.fullname" . }}-userdata

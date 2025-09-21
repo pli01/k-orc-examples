@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "instance.fullname" . }}-userdata
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+type: Opaque
+data:
+  value:
+    {{- $boundary := .Values.cloudinit.boundary -}}
+    {{- $mime := printf "MIME-Version: 1.0\nContent-Type: multipart/mixed; boundary=\"%s\"\n\n" $boundary -}}
+
+    {{- /* Add files from values.cloudinit.parts */ -}}
+    {{- range $i, $p := .Values.cloudinit.parts }}
+      {{- $mime = printf "%s--%s\nContent-Type: %s; charset=\"us-ascii\"\nMIME-Version: 1.0\nContent-Transfer-Encoding: 7bit\nContent-Disposition: attachment; filename=\"%s\"\n\n%s\n" $mime $boundary $p.type $p.name ($.Files.Get (printf "files/%s" $p.file)) -}}
+    {{- end }}
+
+    {{- /* Add cloud-config file with ssh_authorized_keys */ -}}
+    {{- if .Values.ssh_authorized_keys }}
+      {{- $sshConfig := "#cloud-config\nmerge_how: dict(recurse_array)+list(append)+str()\n\nssh_authorized_keys:\n" -}}
+      {{- range $k := .Values.ssh_authorized_keys }}
+        {{- $sshConfig = printf "%s  - %s\n" $sshConfig $k -}}
+      {{- end }}
+      {{- $mime = printf "%s--%s\nContent-Type: text/cloud-config; charset=\"us-ascii\"\nMIME-Version: 1.0\nContent-Transfer-Encoding: 7bit\nContent-Disposition: attachment; filename=\"ssh-keys.yaml\"\n\n%s\n" $mime $boundary $sshConfig -}}
+    {{- end }}
+
+    {{- $mime = printf "%s--%s--\n" $mime $boundary -}}
+    {{ $mime | b64enc | indent 1 }}

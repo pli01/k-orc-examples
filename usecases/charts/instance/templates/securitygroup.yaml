@@ -1,0 +1,21 @@
+---
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: {{ include "instance.fullname" . }}-allow-ssh
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    stateful: true
+    rules:
+    - direction: ingress
+      protocol: tcp
+      portRange:
+        min: 22
+        max: 22
+      ethertype: IPv4

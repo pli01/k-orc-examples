@@ -1,7 +1,7 @@
 apiVersion: openstack.k-orc.cloud/v1alpha1
 kind: Subnet
 metadata:
-  name: {{ include "routed-network.fullname" . }}-subnet-admin
+  name: {{ .Values.subnet_name }}
   labels:
   {{- include "routed-network.labels" . | nindent 4 }}
 spec:
@@ -17,8 +17,9 @@ spec:
     enableDHCP: true
     allocationPools: {{ toYaml .Values.subnet.admin.allocationPools | nindent 6 }}
     hostRoutes: {{ toYaml .Values.subnet.admin.hostRoute | nindent 6 }}
-    networkRef: {{ include "routed-network.fullname" . }}-network-admin
+    networkRef: {{ .Values.network_name }}
     routerRef: {{ include "routed-network.fullname" . }}-router-admin
     tags:
     - subnet-admin
     - {{ include "routed-network.fullname" . }}
+    - {{ include "routed-network.fullname" . }}-subnet-admin

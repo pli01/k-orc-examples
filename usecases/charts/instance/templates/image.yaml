@@ -1,0 +1,15 @@
+---
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Image
+metadata:
+  name: {{ include "instance.fullname" . }}-image
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: unmanaged
+  import:
+    filter:
+      name: {{ .Values.image }}

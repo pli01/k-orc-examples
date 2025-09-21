@@ -1,0 +1,13 @@
+---
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: {{ include "instance.fullname" . }}-default
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: unmanaged
+  import:
+    filter:
+      name: default

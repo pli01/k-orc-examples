@@ -1,0 +1,15 @@
+---
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Flavor
+metadata:
+  name: {{ include "instance.fullname" . }}-flavor
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: unmanaged
+  import:
+    filter:
+      name: {{ .Values.flavor }}

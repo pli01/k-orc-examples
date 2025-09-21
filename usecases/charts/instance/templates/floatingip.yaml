@@ -1,0 +1,17 @@
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: FloatingIP
+metadata:
+  name: {{ include "instance.fullname" . }}-fip
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    floatingNetworkRef: external-network-admin
+    portRef: {{ include "instance.fullname" . }}-port-instance
+    description: {{ include "instance.fullname" . }}-fip
+    tags:
+      - floating-ip
+      - {{ include "instance.fullname" . }}
+      - {{ include "instance.fullname" . }}-fip

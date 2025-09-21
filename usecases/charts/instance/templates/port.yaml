@@ -1,0 +1,23 @@
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Port
+metadata:
+  name: {{ include "instance.fullname" . }}-port-instance
+  labels:
+  {{- include "instance.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    networkRef: {{ .Values.network_name }}
+    description: |
+      {{ include "instance.fullname" . }}-port-instance
+    tags:
+      - port-instance
+      - {{ include "instance.fullname" . }}
+    securityGroupRefs:
+    - {{ include "instance.fullname" . }}-allow-ssh
+    - {{ include "instance.fullname" . }}-default
+    addresses:
+      - subnetRef: {{ .Values.subnet_name }}

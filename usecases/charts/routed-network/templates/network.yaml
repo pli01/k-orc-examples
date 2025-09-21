@@ -1,7 +1,7 @@
 apiVersion: openstack.k-orc.cloud/v1alpha1
 kind: Network
 metadata:
-  name: {{ include "routed-network.fullname" . }}-network-admin
+  name: {{ .Values.network_name }}
   labels:
   {{- include "routed-network.labels" . | nindent 4 }}
 spec:
@@ -16,3 +16,4 @@ spec:
     tags:
     - network-admin
     - {{ include "routed-network.fullname" . }}
+    - {{ include "routed-network.fullname" . }}-network-admin

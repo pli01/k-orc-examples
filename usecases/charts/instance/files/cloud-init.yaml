@@ -1,0 +1,18 @@
+#cloud-config
+merge_how: dict(recurse_array)+list(append)+str()
+
+packages:
+- sudo
+- python3
+- python3-pip
+- git
+
+write_files:
+- path: /tmp/start.sh
+  permissions: "0755"
+  content: |
+    #!/bin/sh
+    echo "start file"
+
+runcmd:
+- /tmp/start.sh
