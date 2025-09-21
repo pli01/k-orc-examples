@@ -1,0 +1,14 @@
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Network
+metadata:
+  name: external-network-admin
+  labels:
+  {{- include "routed-network.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  import:
+    filter:
+      name: {{ .Values.externalNetwork.admin.name }}
+  managementPolicy: unmanaged

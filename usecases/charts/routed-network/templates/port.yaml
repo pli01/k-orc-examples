@@ -1,0 +1,23 @@
+{{/*
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Port
+metadata:
+  name: {{ include "routed-network.fullname" . }}-port-admin
+  labels:
+  {{- include "routed-network.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    networkRef: {{ include "routed-network.fullname" . }}-network-admin
+    description: |
+      {{ include "routed-network.fullname" . }}-port-admin
+    tags:
+      - port-admin
+      - {{ include "routed-network.fullname" . }}
+    addresses:
+      - ip: {{ .Values.port.router.admin.ip }}
+        subnetRef: {{ include "routed-network.fullname" . }}-subnet-admin
+*/}}

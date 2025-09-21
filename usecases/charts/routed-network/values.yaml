@@ -1,0 +1,21 @@
+cloud:
+  name: openstack
+  secretName: openstack-clouds
+externalNetwork:
+  admin:
+    name: FIP_ADMIN
+network:
+  mtu: 1350
+subnet:
+  admin:
+    cidr: 192.168.1.0/24
+    allocationPools:
+      - start: 192.168.1.5
+        end: 192.168.1.250
+    hostRoutes:
+      - destination: 0.0.0.0/0
+        nexthop: 192.168.1.1
+#port:
+#  router:
+#    admin:
+#      ip: 192.168.1.1

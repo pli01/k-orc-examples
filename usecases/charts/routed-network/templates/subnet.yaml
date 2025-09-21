@@ -1,0 +1,24 @@
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Subnet
+metadata:
+  name: {{ include "routed-network.fullname" . }}-subnet-admin
+  labels:
+  {{- include "routed-network.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    description: |
+      {{ include "routed-network.fullname" . }}-subnet-admin
+    ipVersion: 4
+    cidr: {{ .Values.subnet.admin.cidr }}
+    enableDHCP: true
+    allocationPools: {{ toYaml .Values.subnet.admin.allocationPools | nindent 6 }}
+    hostRoutes: {{ toYaml .Values.subnet.admin.hostRoute | nindent 6 }}
+    networkRef: {{ include "routed-network.fullname" . }}-network-admin
+    routerRef: {{ include "routed-network.fullname" . }}-router-admin
+    tags:
+    - subnet-admin
+    - {{ include "routed-network.fullname" . }}

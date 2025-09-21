@@ -1,0 +1,13 @@
+{{/*
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: RouterInterface
+metadata:
+  name: {{ include "routed-network.fullname" . }}-router-interface-admin
+  labels:
+  {{- include "routed-network.labels" . | nindent 4 }}
+spec:
+  type: Subnet
+  routerRef: {{ include "routed-network.fullname" . }}-router-admin
+  subnetRef: {{ include "routed-network.fullname" . }}-subnet-admin
+
+*/}}

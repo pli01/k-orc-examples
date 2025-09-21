@@ -1,0 +1,18 @@
+apiVersion: openstack.k-orc.cloud/v1alpha1
+kind: Network
+metadata:
+  name: {{ include "routed-network.fullname" . }}-network-admin
+  labels:
+  {{- include "routed-network.labels" . | nindent 4 }}
+spec:
+  cloudCredentialsRef:
+    cloudName: {{ .Values.cloud.name }}
+    secretName: {{ .Values.cloud.secretName }}
+  managementPolicy: managed
+  resource:
+    description: |
+      {{ include "routed-network.fullname" . }}-network-admin
+    mtu: {{ .Values.network.mtu }}
+    tags:
+    - network-admin
+    - {{ include "routed-network.fullname" . }}
