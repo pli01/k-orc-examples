@@ -1,0 +1,9 @@
+externalNetwork:
+  admin:
+    name: FIP_ADMIN
+network_name: test-network-admin
+subnet_name: test-subnet-admin
+image: debian12
+
+ssh_authorized_keys:
+  - ssh-ed25519 AAAA... user1
