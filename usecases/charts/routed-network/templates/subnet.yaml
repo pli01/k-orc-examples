@@ -14,7 +14,7 @@ spec:
       {{ include "routed-network.fullname" . }}-subnet-admin
     ipVersion: 4
     cidr: {{ .Values.subnet.admin.cidr }}
-    enableDHCP: true
+    enableDHCP: {{ .Values.subnet.admin.enableDHCP }}
     allocationPools: {{ toYaml .Values.subnet.admin.allocationPools | nindent 6 }}
     hostRoutes: {{ toYaml .Values.subnet.admin.hostRoute | nindent 6 }}
     networkRef: {{ .Values.network_name }}
