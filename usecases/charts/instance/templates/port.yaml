@@ -21,3 +21,7 @@ spec:
     - {{ include "instance.fullname" . }}-default
     addresses:
       - subnetRef: {{ .Values.subnet_name }}
+        {{- if .Values.ip }}
+        ip: {{ .Values.ip }}
+        {{- end }}
+

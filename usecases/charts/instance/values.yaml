@@ -5,6 +5,7 @@ flavor: CO1.2
 image: ubuntu22.04
 network_name: sample-network-admin
 subnet_name: sample-subnet-admin
+#ip: 192.168.1.101
 cloudinit:
   boundary: "===============BOUNDARY=="
   parts:
