@@ -9,9 +9,10 @@ network:
 subnet:
   admin:
     cidr: 192.168.1.0/24
+    enableDHCP: true
     allocationPools:
       - start: 192.168.1.5
-        end: 192.168.1.250
+        end: 192.168.1.100
     hostRoutes:
       - destination: 0.0.0.0/0
         nexthop: 192.168.1.1
